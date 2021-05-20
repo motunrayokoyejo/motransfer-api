@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-userSchema = new Schema({
+userSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -8,7 +8,8 @@ userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
     },
     password: {
         type: String,
@@ -16,4 +17,4 @@ userSchema = new Schema({
     }
 })
 
-module.exports.transfer = model('transfer', userSchema)
+module.exports = mongoose.model('User',userSchema)

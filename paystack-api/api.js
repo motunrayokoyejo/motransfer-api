@@ -1,5 +1,6 @@
 const {Router} = require ('express');
-const { transferModel } = require('../models/transfer.models');
+const Transfer = require('../models/transfer.models');
+//const { userModel} = require('../models/user.models');
 const { createTransfer } = require('../utils/paystack');
 
 apiRouter = Router()
@@ -8,8 +9,9 @@ apiRouter.post('/' , async (req, res) => {
     res.send('I work')
 })
 
+//Endpoint to search transfer history
 apiRouter.get('/search' , async (req, res) => {
-    let transactions = await transferModel.find()
+    let transactions = await Transfer.find()
     res.status(200).json({
         status: true,
         message: "Successfully retrieved transactions",
@@ -17,6 +19,7 @@ apiRouter.get('/search' , async (req, res) => {
     })
 })
 
+//Endpoint to create a transfer
 apiRouter.post('/create-transfer' , async (req, res) => {
     let {
         account, amount, reason, 
@@ -35,7 +38,7 @@ apiRouter.post('/create-transfer' , async (req, res) => {
     if (typeof account.account_number !== 'number' || typeof account.bank_code !== 'string' || account.account_number.toString().length !== 10) {
         return res.status(400).json({
             status: false,
-            message: `account_name must be an integer of 10 numbers and bank_code must be a string`,
+            message: `account_number must be an integer of 10 numbers and bank_code must be a string`,
             data : null
         })
     }
@@ -47,7 +50,7 @@ apiRouter.post('/create-transfer' , async (req, res) => {
         })
     }
     if (!reason) {
-        reason = ""
+        reason = ".."
     }
     amount = amount.toString()
     if(!currency)  {currency = "NGN"}
@@ -77,7 +80,8 @@ apiRouter.post('/create-transfer' , async (req, res) => {
         let date = new Date()
         let time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
         date = `${days[date.getDay()]} ${month[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
-        let newTransfer = await transferModel.create({
+       
+        let newTransfer = await Transfer.create({
             reference: transfer.data.reference,
             amount: transfer.data.amount,
             currency: transfer.data.currency,

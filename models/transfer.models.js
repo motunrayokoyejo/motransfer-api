@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
-transferSchema = new Schema({ 
+transferSchema = mongoose.Schema({ 
     name : {
         type: String,
         required: true
@@ -31,9 +31,9 @@ transferSchema = new Schema({
         required: true
     },
     user: {
-        type: Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId, 
         ref: 'User'
     }
 })
 
-module.exports.transferModel = model('transfer', transferSchema)
+module.exports = mongoose.model('Transfer', transferSchema)

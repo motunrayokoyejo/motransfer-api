@@ -2,6 +2,7 @@ require('dotenv').config()
 const fetch = require('node-fetch');
 const env = process.env
 
+//Verify if the user account exist
 const accountExist = async({account_number, bank_code}) =>{
      try{
         const accountStatus = await fetch(`https://api.paystack.co/bank/resolve?account_number=${account_number}&bank_code=${bank_code}`, {
@@ -37,7 +38,6 @@ const transferRecipient = async data=>{
     return response
      
  }
- 
  
  //initiate transfer 
 const transferMoney = async data=>{
