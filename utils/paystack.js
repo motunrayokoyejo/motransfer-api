@@ -20,7 +20,7 @@ const accountExist = async({account_number, bank_code}) =>{
 // transfer recipient
 const transferRecipient = async data=>{
     let response
-    const initiateTransfer = await fetch('https://api.paystack.co/transferrecipient', {
+    let initiateTransfer = await fetch('https://api.paystack.co/transferrecipient', {
          method: 'POST',
          body:    JSON.stringify(data),
          headers: { 
@@ -59,20 +59,23 @@ const transferMoney = async data=>{
 }
 
 const createTransfer = async (
-    account, 
-    amount, 
-    reason, 
-    type="nuban", 
-    currency="NGN", 
-    source="balance"
+    {
+        account, 
+        amount, 
+        reason, 
+        type, 
+        currency, 
+        source
+    }
 ) => {
     //Verify details
    let userExists, name
    try {
     let _ = await accountExist(account)
     userExists = _.status
-    name = _.data.account_name
+    console.log('response', _)
     if (userExists) {
+        name = _.data.account_name
         const data = {type, name, ...account, currency}
         let recipient = await transferRecipient(data)
         recipient = recipient.data
@@ -84,7 +87,8 @@ const createTransfer = async (
     } else {
             console.log('User does not exist')
             return 'Invalid user'
-    }  
+    }
+    return _  
    } catch (error) {
        console.log(error)
        return error.message
