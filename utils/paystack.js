@@ -83,7 +83,10 @@ const createTransfer = async (
             source, amount, recipient: recipient.recipient_code, reason
         } 
         let transfer = await transferMoney(payMoney)
-        return transfer.status ? transfer : 'Unable to send money'
+        console.log('transfer', transfer)
+        return transfer.status ?
+             {transfer, name, bankName: recipient.details.bank_name} : 
+             'Unable to send money'
     } else {
             console.log('User does not exist')
             return 'Invalid user'
