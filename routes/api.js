@@ -1,6 +1,5 @@
 const {Router} = require ('express');
 const Transfer = require('../models/transfer.models');
-const User = require('../models/user.models');
 const { createTransfer } = require('../utils/paystack');
 const checkAuth = require("../middleware/check-auth");
 

@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const {Router} = require ('express');
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -7,8 +6,10 @@ const checkAuth = require("../middleware/check-auth");
 
 const User = require("../models/user.models");
 
+apiRouter = Router()
+
 //user signup route
-router.post("/signup", (req, res, next) => {
+apiRouter.post("/signup", (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
     .then(user => {
@@ -49,7 +50,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 //user login route
-router.post("/login", checkAuth, (req, res, next) => {
+apiRouter.post("/login", checkAuth, (req, res, next) => {
     User.find({ email: req.body.email })
       .exec()
       .then(user => {
@@ -94,4 +95,4 @@ router.post("/login", checkAuth, (req, res, next) => {
   });
 
 
-module.exports = router;
+module.exports = apiRouter;
