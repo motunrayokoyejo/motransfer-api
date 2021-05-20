@@ -1,6 +1,6 @@
 const {Router} = require ('express');
 const Transfer = require('../models/transfer.models');
-//const { userModel} = require('../models/user.models');
+const User = require('../models/user.models');
 const { createTransfer } = require('../utils/paystack');
 const checkAuth = require("../middleware/check-auth");
 
@@ -11,7 +11,7 @@ apiRouter = Router()
 // })
 
 //Endpoint to search transfer history
-apiRouter.get('/search' , checkAuth, async (req, res) => {
+apiRouter.get('/search', checkAuth, async (req, res) => {
     let transactions = await Transfer.find()
     res.status(200).json({
         status: true,
@@ -89,7 +89,8 @@ apiRouter.post('/create-transfer',checkAuth, async (req, res) => {
             date, time,
             name,
             bank: bankName,
-            reason: transfer.data.reason
+            reason: transfer.data.reason,
+            user: transfer.data.user
         })
         await newTransfer.save()
         response.data = newTransfer
