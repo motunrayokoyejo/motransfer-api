@@ -2,9 +2,12 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const checkAuth = require("../middleware/check-auth");
 
 const User = require("../models/user.models");
 
+//user signup route
 router.post("/signup", (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
@@ -45,7 +48,8 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
-router.post("/login", (req, res, next) => {
+//user login route
+router.post("/login", checkAuth, (req, res, next) => {
     User.find({ email: req.body.email })
       .exec()
       .then(user => {
@@ -88,6 +92,6 @@ router.post("/login", (req, res, next) => {
         });
       });
   });
-  
+
 
 module.exports = router;
