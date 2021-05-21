@@ -50,7 +50,7 @@ apiRouter.post("/signup", (req, res, next) => {
 });
 
 //user login route
-apiRouter.post("/login", checkAuth, (req, res, next) => {
+apiRouter.post("/login", (req, res, next) => {
     User.find({ email: req.body.email })
       .exec()
       .then(user => {
@@ -58,6 +58,7 @@ apiRouter.post("/login", checkAuth, (req, res, next) => {
           return res.status(401).json({
             message: "Auth failed"
           });
+          console.log(err)
         }
         bcrypt.compare(req.body.password, user[0].password, (err, result) => {
           if (err) {
