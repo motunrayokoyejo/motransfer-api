@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js --trace-warnings"
+    "start": "node server.js --trace-warnings",
+    "devstart": "nodemon server.js --trace-warnings"
   },
   "author": "Motunrayo Koyejo",
   "license": "ISC",
