@@ -5,10 +5,6 @@ const checkAuth = require("../middleware/check-auth");
 
 apiRouter = Router()
 
-// apiRouter.post('/' , async (req, res) => {
-//     res.send('I work')
-// })
-
 //Endpoint to search transfer history
 apiRouter.get('/search', checkAuth, async (req, res) => {
     let transactions = await Transfer.find()
