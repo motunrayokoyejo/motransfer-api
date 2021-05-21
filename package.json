@@ -16,6 +16,7 @@
     "date-fns": "^2.21.3",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
+    "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.10",
     "node-fetch": "^2.6.1"
